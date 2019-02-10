@@ -14,7 +14,7 @@ Function Get-Definition {
         $response = Invoke-RestMethod -uri $uri -Headers $headers -Method Get
         [array]$inflections = $response.results.lexicalEntries.inflectionOf.text
         $inflections = [array]$inflections | Select-Object -unique
-        write-host $inflections.length
+        
         if (($inflections.length -eq 1)){
             $word = $inflections[0].toString()
         } else {
