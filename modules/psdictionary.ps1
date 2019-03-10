@@ -1,13 +1,15 @@
 Function Get-Definition {
     [cmdletbinding()]Param(
-        [string] $word
+        [string] $word,
+        [string] $app_id,
+        [string] $app_key
     )
 
     try {
         $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
         $headers.Add("Accept", 'application/json')
-        $headers.Add("app_id", '363625fb')
-        $headers.Add("app_key", 'd6a0dc4cfb45c1b0bf4c75dd7a55a193')
+        $headers.Add("app_id", $app_id)
+        $headers.Add("app_key", $app_key)
 
         #Get Inflection
         $uri = "https://od-api.oxforddictionaries.com:443/api/v1/inflections/en/" + $word
@@ -20,6 +22,7 @@ Function Get-Definition {
         } else {
             $others = [array]$inflections | Where-Object {$_ -ne $word} 
         }
+        
         #Get Definition
         Write-Host "[ DEFINITION: $word ]" -ForegroundColor "red"
         if($others) { Write-Host "[ SEE ALSO  : $others ]" -ForegroundColor "green" }
