@@ -12,7 +12,7 @@ Function Get-Definition {
         $headers.Add("app_key", $app_key)
 
         #Get Inflection
-        $uri = "https://od-api.oxforddictionaries.com:443/api/v1/inflections/en/" + $word
+        $uri = "https://od-api.oxforddictionaries.com:443/api/v2/lemmas/en/" + $word
         $response = Invoke-RestMethod -uri $uri -Headers $headers -Method Get
         [array]$inflections = $response.results.lexicalEntries.inflectionOf.text
         $inflections = [array]$inflections | Select-Object -unique
@@ -29,7 +29,7 @@ Function Get-Definition {
         $jsonpath = "./words/" + $word + ".json"
         if(-not(Test-Path -Path $jsonpath)){
 
-            $uri = "https://od-api.oxforddictionaries.com:443/api/v1/entries/en/" + $word
+            $uri = "https://od-api.oxforddictionaries.com:443/api/v2/entries/en/" + $word
 
             $response = Invoke-RestMethod -uri $uri -Headers $headers -Method Get
             
